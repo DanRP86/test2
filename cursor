@@ -10,4 +10,24 @@ if (Test-Path "$env:LocalAppData\Programs\Python\Python312\python.exe") {
 
 ####sdgdsgfdfgdfgd
 
+.\.venv\Scripts\python.exe -m pip install --upgrade pip setuptools wheel
+.\.venv\Scripts\python.exe -m pip install ipykernel ipython jupyter
+
+#########################
+
+
+$env:JUPYTER_CONFIG_DIR = "$env:APPDATA\jupyter"
+$env:JUPYTER_DATA_DIR   = "$env:APPDATA\jupyter"
+$env:JUPYTER_RUNTIME_DIR= "$env:LOCALAPPDATA\jupyter\runtime"
+New-Item -ItemType Directory $env:JUPYTER_CONFIG_DIR -ea SilentlyContinue | Out-Null
+New-Item -ItemType Directory $env:JUPYTER_DATA_DIR   -ea SilentlyContinue | Out-Null
+New-Item -ItemType Directory $env:JUPYTER_RUNTIME_DIR- ea SilentlyContinue | Out-Null
+
+############################
+.\.venv\Scripts\python.exe -m ipykernel install --user --name ".venv" --display-name "Python (.venv 3.12)"
+
+#############################
+
+.\.venv\Scripts\python.exe -c "import ipykernel, sys; print('ipykernel=', ipykernel.__version__, 'exe=', sys.executable)"
+
 
