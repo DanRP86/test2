@@ -5,16 +5,33 @@
 3. Do **NOT** download installers from the web or run unsigned binaries.
 
 ## SAFE RUN OPTIONS
-- Preferred: Open this script in a trusted notebook environment (e.g., corporate Jupyter or VS Code with notebook mode).
-- If using the IDE, review code line-by-line before running. Look for network calls, file access, or suspicious subprocess usage.
+- Preferred: run in a trusted **notebook** (corporate Jupyter / VS Code Notebook / Colab).
+- If using the IDE on desktop, **review code line-by-line** before running.
 
 > This stage intentionally demonstrates the risk of copy/paste execution.
 """
 
-import textwrap
+import os, platform, textwrap
 
-def boom_banner():
-    msg = textwrap.dedent("""
+# -------------------------
+# Detect notebook vs desktop
+# -------------------------
+def is_notebook() -> bool:
+    try:
+        from IPython import get_ipython
+        if get_ipython():
+            return True
+    except Exception:
+        pass
+    if "COLAB_RELEASE_TAG" in os.environ or platform.system() == "Emscripten":
+        return True
+    return False
+
+# -------------------------
+# BOOM banner + confirmation
+# -------------------------
+def boom_banner_text():
+    return textwrap.dedent("""
     💥 BOOM (Simulated) 💥
 
     This was harmless. In the real world, blindly copy-pasting and executing unknown code
@@ -22,20 +39,40 @@ def boom_banner():
 
     ✅ Lesson:
     - Review code before executing.
-    - Run unknown code in a sandbox or notebook with limited permissions.
-    - Check for secrets usage and outbound calls.
+    - Prefer running unknown code in a sandbox or **notebook** with limited permissions.
+    - Check for hard-coded secrets and outbound network calls.
     """)
-    print(msg)
 
-# Encoded hint: numbers represent ASCII codes
-encoded_hint = [80, 114, 111, 99, 101, 101, 100, 32, 116, 111, 32, 47, 115, 116, 97, 103, 101, 45, 52, 32, 97, 110, 100, 32, 102, 105, 120, 32, 98, 117, 103, 103, 121, 95, 97, 112, 112, 46, 112, 121]
+def show_confirmation():
+    try:
+        import tkinter as tk
+        from tkinter import messagebox
+        root = tk.Tk()
+        root.withdraw()
+        messagebox.showinfo("BOOM (Simulated)", "Please acknowledge by clicking OK.\n\nThis is a safe exercise.")
+        root.destroy()
+    except Exception:
+        input("Type 'OK' to acknowledge and continue: ")
 
-def safe_hint():
-    print("\n--- SAFE PATH ---")
-    decoded = ''.join(chr(n) for n in encoded_hint)
-    print(f"Your next hint: {decoded}")
+# -------------------------
+# Hidden hint (ASCII codes)
+# -------------------------
 
+_encoded = [67,111,109,101,32,104,101,114,101,32,102,111,114,32,121,111,117,114,32,70,105,110,97,108,32,67,104,97,108,108,101,110,103,101,58,32,104,116,116,112,115,58,47,47,103,105,116,104,117,98,46,99,111,109,47,68,97,110,82,80,56,54,47,80,121,116,104,111,110,45,108,101,97,114,110,105,110,103,47,101,100,105,116,47,109,97,115,116,101,114,47,116,101,115,116,116,101,120,116]
+
+def reveal_hint():
+    return ''.join(chr(n) for n in _encoded)
+
+# -------------------------
+# Main flow
+# -------------------------
 if __name__ == "__main__":
-    print("BOOM")
-    boom_banner()
-    safe_hint()
+    if is_notebook():
+        print("Notebook path chosen ✅ — good practice for inspecting code before execution.\n")
+        print("Your next hint:", reveal_hint())
+    else:
+        print("BOOM")
+        print(boom_banner_text())
+        show_confirmation()
+        print("--- SAFE PATH ---")
+        print("Open this in a **notebook** to reveal the next hint (e.g., Jupyter/Colab).")
