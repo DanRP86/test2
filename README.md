@@ -31,4 +31,4 @@ Always use the Company Portal to ensure compliance and security.
 
 ---
 
-💡 **Next Clue:** Once PyCharm is installed, open the project and look for a file named `hereitis.py`. The adventure continues!
+💡 **Next Clue:** Once PyCharm is installed, open the project and look for a file named [Look at the last HINT]. The adventure continues!
