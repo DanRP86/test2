@@ -32,4 +32,5 @@ Always use the Company Portal to ensure compliance and security.
 ---
 
 💡 **Next Clue:** Once PyCharm is installed, open the project and look for a file named [Look at the last HINT]. The adventure continues!
+
 💡 **How to Solve it** Read the code if you want, copy the code and paste in Pycharm. Then run it, it's supereasy! :)
