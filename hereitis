@@ -1,1 +1,41 @@
-#text to be input
+"""
+# IDE Setup (Company Portal)
+1. Open **Company Portal** on your work PC.
+2. Search for **PyCharm Community** (or the approved IDE) and click **Install**.
+3. Do **NOT** download installers from the web or run unsigned binaries.
+
+## SAFE RUN OPTIONS
+- Preferred: Open this script in a trusted notebook environment (e.g., corporate Jupyter or VS Code with notebook mode).
+- If using the IDE, review code line-by-line before running. Look for network calls, file access, or suspicious subprocess usage.
+
+> This stage intentionally demonstrates the risk of copy/paste execution.
+"""
+
+import textwrap
+
+def boom_banner():
+    msg = textwrap.dedent("""
+    💥 BOOM (Simulated) 💥
+
+    This was harmless. In the real world, blindly copy-pasting and executing unknown code
+    could exfiltrate data, steal tokens, or encrypt files.
+
+    ✅ Lesson:
+    - Review code before executing.
+    - Run unknown code in a sandbox or notebook with limited permissions.
+    - Check for secrets usage and outbound calls.
+    """)
+    print(msg)
+
+# Encoded hint: numbers represent ASCII codes
+encoded_hint = [80, 114, 111, 99, 101, 101, 100, 32, 116, 111, 32, 47, 115, 116, 97, 103, 101, 45, 52, 32, 97, 110, 100, 32, 102, 105, 120, 32, 98, 117, 103, 103, 121, 95, 97, 112, 112, 46, 112, 121]
+
+def safe_hint():
+    print("\n--- SAFE PATH ---")
+    decoded = ''.join(chr(n) for n in encoded_hint)
+    print(f"Your next hint: {decoded}")
+
+if __name__ == "__main__":
+    print("BOOM")
+    boom_banner()
+    safe_hint()
